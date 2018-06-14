@@ -28,6 +28,7 @@
         let tail = 5;
         const tileCount = 20;
         let started = false;
+        let handledInput = false;
 
         const resetGame = () => {
             posX = 10;
@@ -42,31 +43,34 @@
         };
 
         const keyPush = ({keyCode}) => {
-             switch(keyCode) {
-                case 37:
-                    if (!momentumX) {
-                        momentumX = -1;
-                        momentumY = 0;
-                    }
-                    break;
-                case 38:
-                    if (!momentumY) {
-                        momentumX = 0;
-                        momentumY = -1;
-                    }
-                    break;
-                case 39:
-                    if (!momentumX) {
-                        momentumX = 1;
-                        momentumY = 0;
-                    }
-                    break;
-                case 40:
-                    if (!momentumY) {
-                        momentumX = 0;
-                        momentumY = 1;
-                    }
-                    break;
+            if (!handledInput) {
+                 handledInput = [37,38,39,40].includes(keyCode);
+                 switch(keyCode) {
+                    case 37:
+                        if (!momentumX) {
+                            momentumX = -1;
+                            momentumY = 0;
+                        }
+                        break;
+                    case 38:
+                        if (!momentumY) {
+                            momentumX = 0;
+                            momentumY = -1;
+                        }
+                        break;
+                    case 39:
+                        if (!momentumX) {
+                            momentumX = 1;
+                            momentumY = 0;
+                        }
+                        break;
+                    case 40:
+                        if (!momentumY) {
+                            momentumX = 0;
+                            momentumY = 1;
+                        }
+                        break;
+                }
             }
         };
 
@@ -77,6 +81,7 @@
             posX += momentumX;
             posY += momentumY;
             started = started || momentumY !== 0 || momentumX !== 0;
+            handledInput = false;
 
             if (posX < 0) {
                 posX = tileCount - 1;
@@ -120,7 +125,6 @@
         setInterval(game, 1000 / 15);
         document.addEventListener('keydown', keyPush);
     }
-
 
     document.addEventListener('DOMContentLoaded', goGoSnake);
 </script>
