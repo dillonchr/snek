@@ -6,10 +6,13 @@
         if (joy && joy.axes) {
             const jx = ~~joy.axes[0];
             const jy = ~~joy.axes[1];
-            if (jx && !x) {
-                return {x: jx, y: 0};
-            } else if (jy && !y) {
-                return {x: 0, y: jy};
+            if (!handledInput) {
+                handledInput = jx || jy;
+                if (jx && !x) {
+                    return {x: jx, y: 0};
+                } else if (jy && !y) {
+                    return {x: 0, y: jy};
+                }
             }
         }
         return {x, y};
