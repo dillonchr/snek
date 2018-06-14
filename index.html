@@ -68,7 +68,6 @@
                     }
                     break;
             }
-            started = started || momentumY !== 0 || momentumX !== 0;
         };
 
         function game() {
@@ -77,6 +76,7 @@
             momentumY = momentum.y;
             posX += momentumX;
             posY += momentumY;
+            started = started || momentumY !== 0 || momentumX !== 0;
 
             if (posX < 0) {
                 posX = tileCount - 1;
