@@ -27,6 +27,19 @@
         const trail = [];
         let tail = 5;
         const tileCount = 20;
+        let started = false;
+
+        const resetGame = () => {
+            posX = 10;
+            posY = 10;
+            rewardX = 15;
+            rewardY = 15;
+            momentumX = 0;
+            momentumY = 0;
+            trail.length = 0;
+            tail = 5;
+            started = false;
+        };
 
         const keyPush = ({keyCode}) => {
              switch(keyCode) {
@@ -55,6 +68,7 @@
                     }
                     break;
             }
+            started = started || momentumY !== 0 || momentumX !== 0;
         };
 
         function game() {
@@ -82,8 +96,8 @@
             context.fillStyle = 'lime';
             for (let i = 0; i < trail.length; i++) {
                 context.fillRect(trail[i].x * tileCount, trail[i].y * tileCount, tileCount - 2, tileCount - 2);
-                if (trail[i].x === posX && trail[i].y === posY) {
-                    tail = 5;
+                if (started && trail[i].x === posX && trail[i].y === posY) {
+                    return resetGame();
                 }
             }
 
